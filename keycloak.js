@@ -64,7 +64,6 @@ function Keycloak (config, keycloakConfig) {
   this.grantManager = new GrantManager(this.config);
   console.log('Keycloak -> this.grantManager', this.grantManager);
 
-
   this.stores = [ BearerStore ];
 
   if (!config) {

@@ -167,9 +167,7 @@ Config.prototype.configure = function configure (config) {
    * @type {Boolean}
    */
   this.verifyTokenAudience = resolveValue(config['verify-token-audience'] || config.verifyTokenAudience || false);
-  
   console.log(this);
-
 };
 
 module.exports = Config;
