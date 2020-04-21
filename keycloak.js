@@ -84,7 +84,7 @@ function Keycloak (config, keycloakConfig) {
   }
 
   this.config.idpHint = config.idpHint;
-  console.log(`this.config = ${JSON.stringify(this.config)}`);
+  console.log('config = ', this.config);
 }
 
 /**

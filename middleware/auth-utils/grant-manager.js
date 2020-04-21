@@ -517,9 +517,12 @@ const fetch = (manager, handler, options, params) => {
   return new Promise((resolve, reject) => {
     const data = (typeof params === 'string' ? params : querystring.stringify(params));
     options.headers['Content-Length'] = data.length;
-
+    console.log('fetch -> options', options);
+    console.log('fetch -> data', data);
+    
     const req = getProtocol(options).request(options, (response) => {
       if (response.statusCode < 200 || response.statusCode > 299) {
+        console.log('fetch -> response.statusCode', response.statusCode);
         return reject(new Error(response.statusCode + ':' + http.STATUS_CODES[ response.statusCode ]));
       }
       let json = '';
