@@ -78,6 +78,7 @@ Grant.prototype.isExpired = function isExpired () {
   if (!this.access_token) {
     return true;
   }
+  console.log('this.access_token.isExpired = ', this.access_token.isExpired());
   return this.access_token.isExpired();
 };
 

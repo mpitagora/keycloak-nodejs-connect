@@ -62,6 +62,8 @@ function Keycloak (config, keycloakConfig) {
   this.config = new Config(keycloakConfig);
 
   this.grantManager = new GrantManager(this.config);
+  console.log('Keycloak -> this.grantManager', this.grantManager);
+
 
   this.stores = [ BearerStore ];
 
@@ -83,6 +85,7 @@ function Keycloak (config, keycloakConfig) {
   }
 
   this.config.idpHint = config.idpHint;
+  console.log(`this.config = ${JSON.stringify(this.config)}`);
 }
 
 /**
@@ -271,6 +274,7 @@ Keycloak.prototype.checkSso = function () {
  */
 Keycloak.prototype.authenticated = function (request) {
   // no-op
+  console.log('Keycloak.prototype.authenticated');
 };
 
 /**
@@ -284,6 +288,7 @@ Keycloak.prototype.authenticated = function (request) {
  */
 Keycloak.prototype.deauthenticated = function (request) {
   // no-op
+  console.log('Keycloak.prototype.deauthenticated');
 };
 
 /**
@@ -396,6 +401,7 @@ Keycloak.prototype.loginUrl = function (uuid, redirectUrl) {
   if (this.config && this.config.idpHint) {
     url += '&kc_idp_hint=' + encodeURIComponent(this.config.idpHint);
   }
+  console.log(`loginUrl = ${url}`);
   return url;
 };
 
@@ -414,6 +420,7 @@ Keycloak.prototype.getAccount = function (token) {
 };
 
 Keycloak.prototype.redirectToLogin = function (request) {
+  console.log(`redirectToLogin=${!this.config.bearerOnly}`);
   return !this.config.bearerOnly;
 };
 

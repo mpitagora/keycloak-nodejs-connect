@@ -19,21 +19,27 @@ const URL = require('url');
 
 module.exports = function (keycloak) {
   return function postAuth (request, response, next) {
+    console.log(`request.query.auth_callback = ${request.query.auth_callback}`);
     if (!request.query.auth_callback) {
+      console.log('postAuth -> call next <!request.query.auth_callback>');
       return next();
     }
 
+    console.log(`request.query.error = ${request.query.error}`);
     //  During the check SSO process the Keycloak server answered the user is not logged in
     if (request.query.error === 'login_required') {
+      console.log('postAuth -> call next <login_required>');
       return next();
     }
 
     if (request.query.error) {
+      console.log('postAuth -> call accessDenied <request.query.error>');
       return keycloak.accessDenied(request, response, next);
     }
 
     keycloak.getGrantFromCode(request.query.code, request, response)
       .then(grant => {
+        console.log(`grant = ${grant}`);
         let urlParts = {
           pathname: request.path,
           query: request.query
