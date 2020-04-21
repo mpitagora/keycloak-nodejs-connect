@@ -409,7 +409,7 @@ GrantManager.prototype.validateGrant = function validateGrant (grant) {
     Promise.all(promises).then(() => {
       resolve(grant);
     }).catch((err) => {
-      console.error('GrantManager.validateGrant: ', error);
+      console.error('GrantManager.validateGrant: ', err);
       reject(new Error(err.message));
     });
   });
