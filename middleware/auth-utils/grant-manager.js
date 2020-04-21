@@ -328,7 +328,7 @@ GrantManager.prototype.getAccount = function getAccount () {
 };
 
 GrantManager.prototype.isGrantRefreshable = function isGrantRefreshable (grant) {
-  console.log('GrantManager.isGrantRefreshable');
+  console.log(`GrantManager.isGrantRefreshable = ${!this.bearerOnly && (grant && grant.refresh_token)}`);
   return !this.bearerOnly && (grant && grant.refresh_token);
 };
 
@@ -356,6 +356,8 @@ GrantManager.prototype.createGrant = function createGrant (rawData) {
     token_type: grantData.token_type,
     __raw: rawData
   });
+  console.log('createGrant -> grant', grant);
+  
 
   if (this.isGrantRefreshable(grant)) {
     return new Promise((resolve, reject) => {
@@ -407,6 +409,7 @@ GrantManager.prototype.validateGrant = function validateGrant (grant) {
     Promise.all(promises).then(() => {
       resolve(grant);
     }).catch((err) => {
+      console.error('GrantManager.validateGrant: ', error);
       reject(new Error(err.message));
     });
   });
