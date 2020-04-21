@@ -59,6 +59,7 @@ function GrantManager (config) {
  */
 GrantManager.prototype.obtainDirectly = function obtainDirectly (username, password,
   callback, scopeParam) {
+  console.log('GrantManager.obtainDirectly');
   const params = {
     client_id: this.clientId,
     username: username,
@@ -90,6 +91,7 @@ GrantManager.prototype.obtainDirectly = function obtainDirectly (username, passw
  * @param {Function} callback Optional callback, if not using promises.
  */
 GrantManager.prototype.obtainFromCode = function obtainFromCode (request, code, sessionId, sessionHost, callback) {
+  console.log('GrantManager.obtainFromCode');
   const params = {
     client_session_state: sessionId,
     client_session_host: sessionHost,
@@ -105,6 +107,7 @@ GrantManager.prototype.obtainFromCode = function obtainFromCode (request, code, 
 };
 
 GrantManager.prototype.checkPermissions = function obtainPermissions (authzRequest, request, callback) {
+  console.log('GrantManager.checkPermissions');
   const params = {
     grant_type: 'urn:ietf:params:oauth:grant-type:uma-ticket'
   };
@@ -204,6 +207,7 @@ GrantManager.prototype.checkPermissions = function obtainPermissions (authzReque
  * @param {Function} callback Optional callback, if not using promises.
  */
 GrantManager.prototype.obtainFromClientCredentials = function obtainFromlientCredentials (callback, scopeParam) {
+  console.log('GrantManager.obtainFromClientCredentials');
   const params = {
     grant_type: 'client_credentials',
     scope: scopeParam || 'openid',
@@ -233,6 +237,7 @@ GrantManager.prototype.obtainFromClientCredentials = function obtainFromlientCre
  * @param {Function} callback Optional callback if promises are not used.
  */
 GrantManager.prototype.ensureFreshness = function ensureFreshness (grant, callback) {
+  console.log('GrantManager.ensureFreshness');
   if (!grant.isExpired()) {
     return nodeify(Promise.resolve(grant), callback);
   }
@@ -265,6 +270,7 @@ GrantManager.prototype.ensureFreshness = function ensureFreshness (grant, callba
  * @return {boolean} `false` if the token is invalid, or the same token if valid.
  */
 GrantManager.prototype.validateAccessToken = function validateAccessToken (token, callback) {
+  console.log('GrantManager.validateAccessToken');
   let t = token;
   if (typeof token === 'object') {
     t = token.token;
@@ -281,6 +287,7 @@ GrantManager.prototype.validateAccessToken = function validateAccessToken (token
 };
 
 GrantManager.prototype.userInfo = function userInfo (token, callback) {
+  console.log('GrantManager.userInfo');
   const url = this.realmUrl + '/protocol/openid-connect/userinfo';
   const options = URL.parse(url);
   options.method = 'GET';
@@ -315,11 +322,13 @@ GrantManager.prototype.userInfo = function userInfo (token, callback) {
 };
 
 GrantManager.prototype.getAccount = function getAccount () {
+  console.log('GrantManager.getAccount');
   console.error('GrantManager#getAccount is deprecated. See GrantManager#userInfo');
   return this.userInfo.apply(this, arguments);
 };
 
 GrantManager.prototype.isGrantRefreshable = function isGrantRefreshable (grant) {
+  console.log('GrantManager.isGrantRefreshable');
   return !this.bearerOnly && (grant && grant.refresh_token);
 };
 
@@ -335,6 +344,7 @@ GrantManager.prototype.isGrantRefreshable = function isGrantRefreshable (grant) 
  * @return {Promise} A promise reoslving a grant.
  */
 GrantManager.prototype.createGrant = function createGrant (rawData) {
+  console.log('GrantManager.createGrant');
   let grantData = rawData;
   if (typeof rawData !== 'object') grantData = JSON.parse(grantData);
 
@@ -373,6 +383,7 @@ GrantManager.prototype.createGrant = function createGrant (rawData) {
  * rejects with an error if any of the tokens are invalid.
  */
 GrantManager.prototype.validateGrant = function validateGrant (grant) {
+  console.log('GrantManager.validateGrant');
   var self = this;
   const validateGrantToken = (grant, tokenName, expectedType) => {
     return new Promise((resolve, reject) => {
@@ -413,6 +424,7 @@ GrantManager.prototype.validateGrant = function validateGrant (grant) {
  * @return {Promise} That resolve a token
  */
 GrantManager.prototype.validateToken = function validateToken (token, expectedType) {
+  console.log('GrantManager.validateToken');
   return new Promise((resolve, reject) => {
     if (!token) {
       reject(new Error('invalid token (missing)'));
