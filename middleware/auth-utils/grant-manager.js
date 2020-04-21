@@ -328,7 +328,7 @@ GrantManager.prototype.getAccount = function getAccount () {
 };
 
 GrantManager.prototype.isGrantRefreshable = function isGrantRefreshable (grant) {
-  console.log(`GrantManager.isGrantRefreshable = ${!this.bearerOnly && (grant && grant.refresh_token)}`);
+  console.log(`GrantManager.isGrantRefreshable = ${(!this.bearerOnly && (grant && grant.refresh_token))}`);
   return !this.bearerOnly && (grant && grant.refresh_token);
 };
 
