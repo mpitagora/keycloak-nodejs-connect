@@ -357,7 +357,6 @@ GrantManager.prototype.createGrant = function createGrant (rawData) {
     __raw: rawData
   });
   console.log('createGrant -> grant', grant);
-  
 
   if (this.isGrantRefreshable(grant)) {
     return new Promise((resolve, reject) => {
@@ -534,7 +533,6 @@ const fetch = (manager, handler, options, params) => {
     options.headers['Content-Length'] = data.length;
     console.log('fetch -> options', options);
     console.log('fetch -> data', data);
-    
     const req = getProtocol(options).request(options, (response) => {
       if (response.statusCode < 200 || response.statusCode > 299) {
         console.log('fetch -> response.statusCode', response.statusCode);
